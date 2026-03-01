@@ -6,6 +6,12 @@
 #include "input/input.h"
 #include "drivers/motor.h"
 
+
+#include "actions/motor_control.h"
+
+static unsigned long lastControl = 0;
+static constexpr unsigned long CONTROL_PERIOD_MS = 20;
+
 void setup()
 {
 
@@ -23,10 +29,16 @@ void setup()
 
 void loop()
 {
+    // Menu更新ループ
     menuUpdate();
 
-    // InputButton btn = inputGetButton();
-    // motorManualUpdate(btn);
-    // delay(5);   // 少しだけ落ち着かせる（なくてもOK）
+    // モーター制御ループ
+    unsigned long now = millis();
+    if (now - lastControl >= CONTROL_PERIOD_MS)
+    {
+        lastControl = now;
+        motorControlUpdate();
+    }
+
 }
 

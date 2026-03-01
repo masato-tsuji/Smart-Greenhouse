@@ -111,7 +111,7 @@ MenuItem openTempMenu = {
     nullptr, 0,
     nullptr,
     nullptr,
-    &openTemp,
+    &tempSettings.openTemp,
     10, 40,
     0,
     0, 0
@@ -124,7 +124,7 @@ MenuItem closeTempMenu = {
     nullptr, 0,
     nullptr,
     nullptr,
-    &closeTemp,
+    &tempSettings.closeTemp,
     10, 40,
     0,
     0, 0

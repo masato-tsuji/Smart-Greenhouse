@@ -2,6 +2,10 @@
 #include "ui/display.h"
 #include "input/input.h"
 
+
+#include "actions/motor_control.h"  // motorSetMode, MODE_...
+extern MenuItem manualMenu;         // ← menu_tree.cpp にある Manual Control
+
 MenuItem* currentMenu = nullptr;
 uint8_t cursor = 0;
 bool actionRunning = false;
@@ -86,6 +90,12 @@ void menuEnter()
     currentMenu = item;
     cursor = currentMenu->lastCursor;
 
+    // ★追加：Manual Control に入ったら手動モード
+    if (currentMenu == &manualMenu)
+    {
+        motorSetMode(MODE_MANUAL);
+    }
+
     // debug用
     // Serial.print("[menuEnter] now=");
     // Serial.print(currentMenu->name);
@@ -102,6 +112,13 @@ void menuBack()
     if (currentMenu->type == MENU_ACTION)
     {
         displaySetBacklight(DISP_WHITE);
+    }
+
+
+    // ★追加：Manual Control から出るなら AUTOへ
+    if (currentMenu == &manualMenu)
+    {
+        motorSetMode(MODE_AUTO);
     }
 
     MenuItem* parent = currentMenu->parent;
