@@ -9,8 +9,8 @@ static constexpr uint8_t PIN_MOTOR_DIR = 2;
 static constexpr uint8_t PIN_MOTOR_PWM = 3;
 
 // 上下端リミットスイッチ
-static constexpr uint8_t PIN_LS_UP   = 4;
-static constexpr uint8_t PIN_LS_DOWN = 5;
+static constexpr uint8_t PIN_LS_UPPER   = 4;
+static constexpr uint8_t PIN_LS_LOWER = 5;
 
 //==============================
 // LS論理（ここだけで切替）
@@ -22,20 +22,31 @@ static constexpr uint8_t PIN_LS_DOWN = 5;
 static inline bool lsUpTriggered()
 {
 #if LS_TRIG_IS_LOW
-  return digitalRead(PIN_LS_UP) == LOW;
+  return digitalRead(PIN_LS_UPPER) == LOW;
 #else
-  return digitalRead(PIN_LS_UP) == HIGH;
+  return digitalRead(PIN_LS_UPPER) == HIGH;
 #endif
 }
 
 static inline bool lsDownTriggered()
 {
 #if LS_TRIG_IS_LOW
-  return digitalRead(PIN_LS_DOWN) == LOW;
+  return digitalRead(PIN_LS_LOWER) == LOW;
 #else
-  return digitalRead(PIN_LS_DOWN) == HIGH;
+  return digitalRead(PIN_LS_LOWER) == HIGH;
 #endif
 }
+
+uint8_t motorGetUpperLsRaw()
+{
+    return digitalRead(PIN_LS_UPPER);
+}
+
+uint8_t motorGetLowerLsRaw()
+{
+    return digitalRead(PIN_LS_LOWER);
+}
+
 
 //==============================
 // 状態
@@ -150,8 +161,8 @@ void initMotor()
     pinMode(PIN_MOTOR_PWM, OUTPUT);
     pinMode(PIN_MOTOR_DIR, OUTPUT);
 
-    pinMode(PIN_LS_UP,   INPUT_PULLUP);
-    pinMode(PIN_LS_DOWN, INPUT_PULLUP);
+    pinMode(PIN_LS_UPPER,   INPUT_PULLUP);
+    pinMode(PIN_LS_LOWER, INPUT_PULLUP);
 
     motorStop();
 }

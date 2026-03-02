@@ -130,22 +130,6 @@ MenuItem closeTempMenu = {
     0, 0
 };
 
-//==================================================
-// Manual（手動操作）
-//==================================================
-// MenuItem manualMenu = {
-//     "Manual Control",
-//     MENU_FOLDER,
-//     &mainMenu,
-//     manualChildren,
-//     COUNT_OF(manualChildren),
-//     nullptr,
-//     nullptr,
-//     nullptr, 0, 0,
-//     0,
-//     0, 0
-// };
-
 MenuItem manualMenu = {
     "Manual Control",
     MENU_ACTION,
@@ -208,7 +192,7 @@ MenuItem sensorMenu = {
     drawSensorStatus,
     nullptr, 0, 0,
     0,
-    1000, 0 // 例：1秒更新（不要なら 0,0 に）
+    100, 0
 };
 
 MenuItem logsMenu = {

@@ -16,3 +16,8 @@ void motorCommand(MotorCommand cmd);  // 安全・上限・ランプ込み
 
 // 互換（手動制御。将来actionsへ移動しやすい）
 void motorManualUpdate(InputButton btn);
+
+// LSの状態取得
+uint8_t motorGetUpperLsRaw();
+uint8_t motorGetLowerLsRaw();
+
