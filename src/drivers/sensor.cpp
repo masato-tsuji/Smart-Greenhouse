@@ -19,3 +19,5 @@ float readHumidity() {
     if (sht.readSample()) return sht.getHumidity();
     return -1.0;    // エラー値
 }
+
+

@@ -14,7 +14,7 @@ void motorSetMode(MotorControlMode mode);
 MotorControlMode motorGetMode();
 
 // 周期更新（menuのrefreshMsなどから呼ぶ）
-void motorControlUpdate();
+void motorControlUpdate(uint32_t now_ms);
 
 struct MotorStatus
 {

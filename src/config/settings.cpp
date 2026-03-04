@@ -15,3 +15,10 @@ MotorSettings motorSettings =
     100,   // 初期上限
     0      // 初期ランプ時間
 };
+
+
+RainfallStateSettings rainfallStateSettings = {
+  3,      // 3mm
+  300,    // 5分
+  180     // 3分
+};

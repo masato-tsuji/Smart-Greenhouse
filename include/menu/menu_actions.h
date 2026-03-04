@@ -4,6 +4,12 @@
 // ===== 温湿度表示 =====
 void actionShowTempHumidity();
 
+
+// ===== 降雨センサー表示 =====
+void actionRainfallStatus();
+void drawRainfallStatus();
+
+
 void actionControlSetup();
 void actionManualControl();
 void actionSensorStatus();

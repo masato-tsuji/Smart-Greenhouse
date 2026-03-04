@@ -5,12 +5,14 @@
 #include "ui/display.h"
 #include "input/input.h"
 #include "drivers/motor.h"
-
-
 #include "actions/motor_control.h"
+#include "actions/rainfall_state.h"
 
 static unsigned long lastControl = 0;
 static constexpr unsigned long CONTROL_PERIOD_MS = 20;
+
+static unsigned long lastRain = 0;
+static constexpr unsigned long RAIN_PERIOD_MS = 500;
 
 void setup()
 {
@@ -29,16 +31,22 @@ void setup()
 
 void loop()
 {
-    // Menu更新ループ
     menuUpdate();
 
-    // モーター制御ループ
     unsigned long now = millis();
-    if (now - lastControl >= CONTROL_PERIOD_MS)
+
+    // 1) rainfallを先に（可能なら）
+    if (now - lastRain >= RAIN_PERIOD_MS)
     {
-        lastControl = now;
-        motorControlUpdate();
+        lastRain += RAIN_PERIOD_MS;
+        rainfallStateUpdate(now);   // nowを渡すとテストしやすい
     }
 
+    // 2) motor_control
+    if (now - lastControl >= CONTROL_PERIOD_MS)
+    {
+        lastControl += CONTROL_PERIOD_MS;
+        motorControlUpdate(now);
+    }
 }
 

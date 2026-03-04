@@ -3,6 +3,7 @@
 #include "drivers/sensor.h"
 #include "input/input.h"
 #include "config/settings.h"
+#include "actions/rainfall_state.h"
 // #include "ui/display.h"
 
 //====================================================
@@ -95,7 +96,11 @@ MotorStatus motorGetStatus()
 //====================================================
 // 周期更新（呼び出し側で refreshMs を決める）
 //====================================================
-void motorControlUpdate()
+
+// 例：rainfallStateUpdate を 500ms で呼んでいるなら、fresh許容は2倍くらいが妥当
+static constexpr uint32_t RAIN_FRESH_TIMEOUT_MS = 1200; // 500ms×2 + α
+
+void motorControlUpdate(uint32_t now_ms)
 {
     switch (g_mode)
     {
@@ -104,8 +109,32 @@ void motorControlUpdate()
             break;
 
         case MODE_AUTO:
+        {
+            // --- 1) 起動直後/未取得：勝手に動かさない ---
+            if (!rainfallReady())
+            {
+                motorCommand(MOTOR_CMD_STOP);
+                break;
+            }
+
+            // --- 2) センサー更新が止まった：安全側で閉める（開けない） ---
+            if (!rainfallFresh(now_ms, RAIN_FRESH_TIMEOUT_MS))
+            {
+                motorCommand(MOTOR_CMD_CLOSE);
+                break;
+            }
+
+            // --- 3) 雨なら即閉める ---
+            if (rainfallIsRaining())
+            {
+                motorCommand(MOTOR_CMD_CLOSE);
+                break;
+            }
+
+            // --- 4) 晴れ：通常の自動制御（温度ANDなど） ---
             motorAutoControl();
             break;
+        }
 
         case MODE_STOP:
         default:
