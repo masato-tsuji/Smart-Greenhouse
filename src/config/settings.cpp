@@ -18,7 +18,7 @@ MotorSettings motorSettings =
 
 
 RainfallStateSettings rainfallStateSettings = {
-  3,      // 3mm
-  300,    // 5分
-  180     // 3分
+  3,      // 3mm 雨判定
+  300,    // 5分 雨判定
+  180     // 3分 晴判定
 };

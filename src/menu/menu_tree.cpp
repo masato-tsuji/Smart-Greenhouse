@@ -26,6 +26,10 @@ extern MenuItem motorManualMenu;
 // extern MenuItem motorOpenMenu;
 // extern MenuItem motorCloseMenu;
 
+
+extern MenuItem rainfallStatusMenu;
+
+
 //==================================================
 // 子配列（UI順を優先しつつ、コメントで関係を明確化）
 //==================================================
@@ -39,12 +43,17 @@ MenuItem* mainChildren[] = {
 
     // --- Status / Logs（状態・履歴）
     &sensorMenu,
+    &rainfallStatusMenu,
     &logsMenu,
 
     // --- Time / Tools / System（保守）
     &timeMenu,
     &toolsMenu,
     &systemMenu
+
+    
+
+
 };
 
 MenuItem* controlChildren[] = {
@@ -195,6 +204,20 @@ MenuItem sensorMenu = {
     0,
     100, 0
 };
+
+
+MenuItem rainfallStatusMenu = {
+    "Rain Status",
+    MENU_ACTION,
+    &mainMenu,
+    nullptr, 0,
+    actionRainfallStatus,
+    drawRainfallStatus,
+    nullptr, 0, 0,
+    0,
+    500, 0   // refreshMs=500ms（表示更新）
+};
+
 
 MenuItem logsMenu = {
     "View Logs",

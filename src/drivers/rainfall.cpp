@@ -50,3 +50,19 @@ uint32_t rainfallLastOkMs()
 {
   return g_last_ok_ms;
 }
+
+
+bool rainfallReadRawCount(uint32_t &out_count)
+{
+  if (!g_inited) initRainfall();
+
+  if (!g_ok)
+  {
+    g_ok = g_sensor.begin();
+    if (!g_ok) return false;
+  }
+
+  out_count = g_sensor.getRawData();  // 公式API：転倒回数(count) [1](https://jp.robotshop.com/products/dfrobot-gravity-tipping-bucket-rainfall-sensor-i2c-uart)[2](https://forum.core-electronics.com.au/t/gravity-tipping-bucket-rainfall-sensor-i2c-uart-sen0575/20840)
+  g_last_ok_ms = millis();
+  return true;
+}

@@ -13,3 +13,4 @@ bool rainfallOk();
 // 最終成功時刻(ms)
 uint32_t rainfallLastOkMs();
 
+bool rainfallReadRawCount(uint32_t &out_count);
