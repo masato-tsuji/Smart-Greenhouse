@@ -1,4 +1,4 @@
-// main.cpp (entrypoint)
+// main.cpp (entry point)
 
 #include "drivers/sensor.h"
 #include "menu/menu.h"
@@ -8,12 +8,14 @@
 #include "actions/motor_control.h"
 #include "actions/rainfall_state.h"
 
+// 制御周期と雨量更新周期を定義
 static unsigned long lastControl = 0;
 static constexpr unsigned long CONTROL_PERIOD_MS = 20;
 
 static unsigned long lastRain = 0;
 static constexpr unsigned long RAIN_PERIOD_MS = 500;
 
+// 初期化とメインループ
 void setup()
 {
 
@@ -39,7 +41,7 @@ void loop()
     if (now - lastRain >= RAIN_PERIOD_MS)
     {
         lastRain += RAIN_PERIOD_MS;
-        rainfallStateUpdate(now);   // nowを渡すとテストしやすい
+        rainfallStateUpdate(now);
     }
 
     // 2) motor_control
