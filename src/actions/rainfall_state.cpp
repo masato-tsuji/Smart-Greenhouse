@@ -19,6 +19,7 @@ static uint32_t g_last_rain_ms = 0;
 
 static std::deque<Sample> g_samples;
 
+// 初期化
 void initRainfallState()
 {
   g_state = RainState::UNKNOWN;
@@ -34,16 +35,21 @@ RainState rainfallGetState() { return g_state; }
 
 bool rainfallReady() { return g_ready; }
 
+
 bool rainfallFresh(uint32_t now_ms, uint32_t fresh_timeout_ms)
 {
   if (!g_ready) return false;
   return (now_ms - g_last_update_ms) <= fresh_timeout_ms;
 }
 
+// 雨かどうかを返す
 bool rainfallIsRaining()
 {
   // UNKNOWNは安全側で雨扱い（※ただし motor_control 側で ready まで動かさない運用が相性良い）
-  return (g_state == RainState::RAINING) || (g_state == RainState::UNKNOWN);
+  // return (g_state == RainState::RAINING) || (g_state == RainState::UNKNOWN);
+
+  // 雨の時のみ
+  return (g_state == RainState::RAINING);
 }
 
 float rainfallGetLatestTotalMm() { return g_last_total_mm; }

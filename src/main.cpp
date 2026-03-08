@@ -1,5 +1,6 @@
 // main.cpp (entry point)
 
+#include "drivers/lcdshield.h"
 #include "drivers/sensor.h"
 #include "menu/menu.h"
 #include "ui/display.h"
@@ -7,6 +8,8 @@
 #include "drivers/motor.h"
 #include "actions/motor_control.h"
 #include "actions/rainfall_state.h"
+#include "tools/serial_tools.h"
+
 
 // 制御周期と雨量更新周期を定義
 static unsigned long lastControl = 0;
@@ -14,6 +17,7 @@ static constexpr unsigned long CONTROL_PERIOD_MS = 20;
 
 static unsigned long lastRain = 0;
 static constexpr unsigned long RAIN_PERIOD_MS = 500;
+
 
 // 初期化とメインループ
 void setup()
@@ -23,16 +27,19 @@ void setup()
     Serial.begin(115200);
 
     // 初期化
-    initDisplay();  // 表示ユニットLCD
-    initInput();    // 表示ユニットボタン（何もしてないけど何となく）
-    initSensor();   // 温湿度センサー
-    initMotor();    // モーター
-    initMenu();     // Menu
+    initSerialTools();  // シリアルツール初期化
+    initLcdshield();    // LCD初期化
+    initDisplay();      // 表示初期化
+    initInput();        // 表示ユニットボタン（何もしてないけど何となく）
+    initSensor();       // 温湿度センサー
+    initMotor();        // モーター
+    initMenu();         // Menu
 
 }
 
 void loop()
 {
+    serialToolsUpdate();
     menuUpdate();
 
     unsigned long now = millis();
@@ -50,5 +57,8 @@ void loop()
         lastControl += CONTROL_PERIOD_MS;
         motorControlUpdate(now);
     }
+	
+
+	
 }
 
