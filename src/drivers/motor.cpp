@@ -9,7 +9,7 @@ static constexpr uint8_t PIN_MOTOR_DIR = 2;
 static constexpr uint8_t PIN_MOTOR_PWM = 3;
 
 // 上下端リミットスイッチ
-static constexpr uint8_t PIN_LS_UPPER   = 4;
+static constexpr uint8_t PIN_LS_UPPER = 4;
 static constexpr uint8_t PIN_LS_LOWER = 5;
 
 //==============================
