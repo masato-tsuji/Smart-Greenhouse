@@ -1,8 +1,7 @@
 // ui/display_lcd.cpp
 #include "ui/display.h"
-#include <Adafruit_RGBLCDShield.h>
+#include "drivers/lcdshield.h"
 
-static Adafruit_RGBLCDShield lcd;
 
 /* LCDのバックカラー
 lcd.setBacklight(0);   // OFF
@@ -20,8 +19,7 @@ lcd.scrollDisplayLeft();
 */
 
 void initDisplayLcd(){
-    lcd.begin(16,2);
-    lcd.setBacklight(0x7); // 初期色：白
+    lcd.clear();
 }
 
 // バックカラー設定

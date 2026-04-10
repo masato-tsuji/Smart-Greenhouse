@@ -1,3 +1,5 @@
+// drivers/sensor.cpp
+// シンプルなセンサーであればここで定義しちゃう
 #include "drivers/sensor.h"
 #include <arduino-sht.h>
 #include <SHTSensor.h>
@@ -10,7 +12,6 @@ void initSensor() {
 }
 
 float readTemperature() {
-    sht.init();
     if (sht.readSample()) return sht.getTemperature();
     return -999.0;  // エラー値
 }
